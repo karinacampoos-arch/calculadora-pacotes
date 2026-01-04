@@ -145,13 +145,14 @@ function calcular() {
   const valorRadio = radio <= 5 ? radio * 120 : (5 * 120 + (radio - 5) * 100);
   const total = valorDoses + valorRadio;
 
-  document.getElementById("resultado").innerText =
-    "Resumo do pacote:\n\n" +
-    "Doses: " + doses + " → R$ " + valorDoses + "\n" +
-    "Radiofrequência: " + radio + " → R$ " + valorRadio + "\n\n" +
-    "VALOR TOTAL: R$ " + total + "\n\n" +
-    "Agradecemos a sua preferência.\n" +
-    "WhatsApp: (11) 96456-8408";
+ document.getElementById("resultado").innerText =
+  "Resumo do pacote:\n\n" +
+  "Doses: " + doses + " → R$ " + valorDoses + "\n" +
+  "Radiofrequência: " + radio + " → R$ " + valorRadio + "\n\n" +
+  "VALOR TOTAL: R$ " + total + "\n\n" +
+  "Para mais informações sobre formas de pagamento e condições especiais, entre em contato com Karina.\n" +
+  "WhatsApp: (11) 96456-8408";
+
 }
 </script>
 
