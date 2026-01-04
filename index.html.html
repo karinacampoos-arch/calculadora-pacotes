@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Calculadora de Pacotes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* FUNDO COM IMG */
+.bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* CAMADA ESCURA */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45);
+  z-index: -1;
+}
+
+/* CONTEÚDO */
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.box {
+  background: rgba(255,255,255,0.95);
+  padding: 25px;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+}
+
+h2 {
+  text-align: center;
+  color: #7a2cbf;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+button {
+  margin-top: 25px;
+  width: 100%;
+  padding: 14px;
+  font-size: 17px;
+  background: linear-gradient(135deg, #b57edc, #7a2cbf);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.resultado {
+  margin-top: 20px;
+  background: #f6efff;
+  padding: 15px;
+  border-radius: 12px;
+  white-space: pre-line;
+  font-weight: 600;
+  color: #4a1c80;
+}
+</style>
+</head>
+
+<body>
+
+<!-- FUNDO -->
+<img src="fundo.jpg" class="bg">
+<div class="overlay"></div>
+
+<!-- CONTEÚDO -->
+<div class="container">
+  <div class="box">
+    <h2>Calculadora de Pacotes</h2>
+
+    <label>Quantidade de doses:</label>
+    <input type="number" id="doses" min="0">
+
+    <label>Sessões de radiofrequência:</label>
+    <input type="number" id="radio" min="0">
+
+    <button onclick="calcular()">Calcular</button>
+
+    <div class="resultado" id="resultado"></div>
+  </div>
+</div>
+
+<script>
+function calcular() {
+  const doses = Number(document.getElementById("doses").value);
+  const radio = Number(document.getElementById("radio").value);
+
+  const valorDoses = doses * 200;
+  const valorRadio = radio <= 5 ? radio * 120 : (5 * 120 + (radio - 5) * 100);
+  const total = valorDoses + valorRadio;
+
+  document.getElementById("resultado").innerText =
+    "Resumo do pacote:\n\n" +
+    "Doses: " + doses + " → R$ " + valorDoses + "\n" +
+    "Radiofrequência: " + radio + " → R$ " + valorRadio + "\n\n" +
+    "VALOR TOTAL: R$ " + total + "\n\n" +
+    "Agradecemos a sua preferência.\n" +
+    "WhatsApp: (11) 96456-8408";
+}
+</script>
+
+</body>
+</html>
