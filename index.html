@@ -2,157 +2,435 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Calculadora de Pacotes</title>
+<title>Calculadora de Pacotes | Karina Campos</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<meta name="theme-color" content="#7a2cbf">
+
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Arial, sans-serif;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', Arial, sans-serif;
 }
 
-/* IMAGEM DE FUNDO INLINE */
-.bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -2;
+body{
+  background:linear-gradient(180deg,#f6efff,#ffffff);
 }
 
-/* CAMADA ESCURA */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.45);
-  z-index: -1;
+.container{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
 
-/* CONTEÚDO */
-.container {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+.box{
+  background:#fff;
+  padding:30px;
+  border-radius:22px;
+  width:100%;
+  max-width:460px;
+  box-shadow:0 20px 45px rgba(0,0,0,0.15);
 }
 
-.box {
-  background: rgba(255,255,255,0.95);
-  padding: 25px;
-  border-radius: 18px;
-  width: 100%;
-  max-width: 420px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+/* LOGO */
+.logo{
+  text-align:center;
+  margin-bottom:22px;
 }
 
-h2 {
-  text-align: center;
-  color: #7a2cbf;
-  margin-bottom: 20px;
+.logo h1{
+  font-size:26px;
+  color:#7a2cbf;
 }
 
-label {
-  display: block;
-  margin-top: 15px;
-  font-weight: 600;
+.logo span{
+  font-size:13px;
+  color:#666;
 }
 
-input {
-  width: 100%;
-  padding: 12px;
-  margin-top: 6px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
+/* FORM */
+label{
+  display:block;
+  margin-top:16px;
+  font-weight:600;
 }
 
-button {
-  margin-top: 25px;
-  width: 100%;
-  padding: 14px;
-  font-size: 17px;
-  background: linear-gradient(135deg, #b57edc, #7a2cbf);
-  color: white;
-  border: none;
-  border-radius: 14px;
-  font-weight: bold;
-  cursor: pointer;
+input{
+  width:100%;
+  padding:13px;
+  margin-top:6px;
+  border-radius:14px;
+  border:1px solid #ccc;
+  font-size:15px;
 }
 
-.resultado {
-  margin-top: 20px;
-  background: #f6efff;
-  padding: 15px;
-  border-radius: 12px;
-  white-space: pre-line;
-  font-weight: 600;
-  color: #4a1c80;
+button{
+  margin-top:24px;
+  width:100%;
+  padding:16px;
+  font-size:16px;
+  background:linear-gradient(135deg,#b57edc,#7a2cbf);
+  color:#fff;
+  border:none;
+  border-radius:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.resultado{
+  margin-top:24px;
+  background:#f6efff;
+  padding:20px;
+  border-radius:16px;
+  white-space:pre-line;
+  font-size:14px;
+  color:#4a1c80;
+}
+
+.total{
+  font-size:18px;
+  font-weight:bold;
+  margin:12px 0;
+}
+
+.acoes{
+  margin-top:18px;
+  display:flex;
+  gap:10px;
+}
+
+.acoes a, .acoes button{
+  flex:1;
+  padding:14px;
+  border-radius:14px;
+  font-weight:bold;
+  cursor:pointer;
+  text-align:center;
+  text-decoration:none;
+}
+
+.whats{
+  background:#25D366;
+  color:#fff;
+}
+
+.pdf{
+  background:#fff;
+  border:2px solid #7a2cbf;
+  color:#7a2cbf;
 }
 </style>
 </head>
 
 <body>
 
-<!-- FUNDO INLINE (BASE64) -->
-<img
-  class="bg"
-  src="data:image/jpeg;base64,
-/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAQEBUQEBIQFRUVFRUVFRUVFRUV
-FRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGhAQ
-Gi0lHyUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-Lf/AABEIAOEA4QMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAABQYBBAcD
-Af/EAD0QAAIBAgMFBQcDBgUFAAAAAAECAwQRAAUSITFBBhMiUWFxFDKBkaGxwQcUIz
-NSYnKS0fAkQ1OCorL/xAAYAQEBAQEBAAAAAAAAAAAAAAAAAQIDBP/EAB8RAQEBAQ
-EBAQAAAAAAAAAAAAABEQIhEjFBQv/aAAwDAQACEQMRAD8A9xAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-/>
-
-<div class="overlay"></div>
-
 <div class="container">
-  <div class="box">
-    <h2>Calculadora de Pacotes</h2>
+  <div class="box" id="orcamento">
 
-    <label>Quantidade de doses:</label>
-    <input type="number" id="doses" min="0">
+    <div class="logo">
+      <h1>Karina Campos</h1>
+      <span>Estética Avançada</span>
+    </div>
 
-    <label>Sessões de radiofrequência:</label>
-    <input type="number" id="radio" min="0">
+    <label>Nome do cliente</label>
+    <input type="text" id="nome" placeholder="Ex: Maria Silva">
 
-    <button onclick="calcular()">Calcular</button>
+    <label>Idade do cliente</label>
+    <input type="number" id="idade" placeholder="Ex: 35">
+
+    <label>Quantidade de doses (2,5 mg)</label>
+    <input type="number" id="doses" min="0" placeholder="Ex: 2">
+
+    <label>Sessões de radiofrequência</label>
+    <input type="number" id="radio" min="0" placeholder="Ex: 6">
+
+    <button onclick="calcular()">Calcular valor</button>
 
     <div class="resultado" id="resultado"></div>
+
+    <div class="acoes" id="acoes" style="display:none">
+      <a id="whats" class="whats" target="_blank">Enviar no WhatsApp</a>
+      <button class="pdf" onclick="window.print()">Gerar PDF</button>
+    </div>
+
   </div>
 </div>
 
 <script>
-function calcular() {
+function formatar(v){
+  return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+}
+
+function parcelas(total){
+  if(total >= 200 && total <= 300) return "1x";
+  if(total <= 500) return "até 2x";
+  if(total <= 700) return "até 4x";
+  if(total <= 900) return "até 5x";
+  if(total <= 2500) return "até 10x";
+  return "sob consulta";
+}
+
+function calcular(){
+  const nome = document.getElementById("nome").value || "Cliente";
+  const idade = document.getElementById("idade").value || "-";
   const doses = Number(document.getElementById("doses").value);
   const radio = Number(document.getElementById("radio").value);
+
+  if(doses < 0 || radio < 0){
+    resultado.innerText = "Informe valores válidos.";
+    return;
+  }
 
   const valorDoses = doses * 200;
   const valorRadio = radio <= 5 ? radio * 120 : (5 * 120 + (radio - 5) * 100);
   const total = valorDoses + valorRadio;
 
- document.getElementById("resultado").innerText =
-  "Resumo do pacote:\n\n" +
-  "Doses: " + doses + " → R$ " + valorDoses + "\n" +
-  "Radiofrequência: " + radio + " → R$ " + valorRadio + "\n\n" +
-  "VALOR TOTAL: R$ " + total + "\n\n" +
-  "Para mais informações sobre formas de pagamento e condições especiais, entre em contato com Karina.\n" +
-  "WhatsApp: (11) 96456-8408";
+  const texto =
+`ORÇAMENTO ESTÉTICO
 
+Cliente: ${nome}
+Idade: ${idade}
+
+Dose 2,5 mg: ${doses} → ${formatar(valorDoses)}
+Radiofrequência: ${radio} → ${formatar(valorRadio)}
+
+VALOR TOTAL: ${formatar(total)}
+
+Forma de pagamento: ${parcelas(total)}
+
+Karina Campos – Estética Avançada
+WhatsApp: (11) 96456-8408`;
+
+  document.getElementById("resultado").innerHTML =
+    texto.replace("VALOR TOTAL", "<span class='total'>VALOR TOTAL</span>");
+
+  document.getElementById("acoes").style.display = "flex";
+
+  document.getElementById("whats").href =
+    "https://wa.me/5511964568408?text=" + encodeURIComponent(texto);
+}
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Calculadora de Pacotes | Karina Campos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#7a2cbf">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', Arial, sans-serif;
+}
+
+body{
+  background:linear-gradient(180deg,#f6efff,#ffffff);
+}
+
+.container{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.box{
+  background:#fff;
+  padding:30px;
+  border-radius:22px;
+  width:100%;
+  max-width:460px;
+  box-shadow:0 20px 45px rgba(0,0,0,0.15);
+}
+
+/* LOGO */
+.logo{
+  text-align:center;
+  margin-bottom:22px;
+}
+
+.logo h1{
+  font-size:26px;
+  color:#7a2cbf;
+}
+
+.logo span{
+  font-size:13px;
+  color:#666;
+}
+
+/* FORM */
+label{
+  display:block;
+  margin-top:16px;
+  font-weight:600;
+}
+
+input{
+  width:100%;
+  padding:13px;
+  margin-top:6px;
+  border-radius:14px;
+  border:1px solid #ccc;
+  font-size:15px;
+}
+
+button{
+  margin-top:24px;
+  width:100%;
+  padding:16px;
+  font-size:16px;
+  background:linear-gradient(135deg,#b57edc,#7a2cbf);
+  color:#fff;
+  border:none;
+  border-radius:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.resultado{
+  margin-top:24px;
+  background:#f6efff;
+  padding:20px;
+  border-radius:16px;
+  white-space:pre-line;
+  font-size:14px;
+  color:#4a1c80;
+}
+
+.total{
+  font-size:18px;
+  font-weight:bold;
+  margin:12px 0;
+}
+
+.acoes{
+  margin-top:18px;
+  display:flex;
+  gap:10px;
+}
+
+.acoes a, .acoes button{
+  flex:1;
+  padding:14px;
+  border-radius:14px;
+  font-weight:bold;
+  cursor:pointer;
+  text-align:center;
+  text-decoration:none;
+}
+
+.whats{
+  background:#25D366;
+  color:#fff;
+}
+
+.pdf{
+  background:#fff;
+  border:2px solid #7a2cbf;
+  color:#7a2cbf;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="box" id="orcamento">
+
+    <div class="logo">
+      <h1>Karina Campos</h1>
+      <span>Estética Avançada</span>
+    </div>
+
+    <label>Nome do cliente</label>
+    <input type="text" id="nome" placeholder="Ex: Maria Silva">
+
+    <label>Idade do cliente</label>
+    <input type="number" id="idade" placeholder="Ex: 35">
+
+    <label>Quantidade de doses (2,5 mg)</label>
+    <input type="number" id="doses" min="0" placeholder="Ex: 2">
+
+    <label>Sessões de radiofrequência</label>
+    <input type="number" id="radio" min="0" placeholder="Ex: 6">
+
+    <button onclick="calcular()">Calcular valor</button>
+
+    <div class="resultado" id="resultado"></div>
+
+    <div class="acoes" id="acoes" style="display:none">
+      <a id="whats" class="whats" target="_blank">Enviar no WhatsApp</a>
+      <button class="pdf" onclick="window.print()">Gerar PDF</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function formatar(v){
+  return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+}
+
+function parcelas(total){
+  if(total >= 200 && total <= 300) return "1x";
+  if(total <= 500) return "até 2x";
+  if(total <= 700) return "até 4x";
+  if(total <= 900) return "até 5x";
+  if(total <= 2500) return "até 10x";
+  return "sob consulta";
+}
+
+function calcular(){
+  const nome = document.getElementById("nome").value || "Cliente";
+  const idade = document.getElementById("idade").value || "-";
+  const doses = Number(document.getElementById("doses").value);
+  const radio = Number(document.getElementById("radio").value);
+
+  if(doses < 0 || radio < 0){
+    resultado.innerText = "Informe valores válidos.";
+    return;
+  }
+
+  const valorDoses = doses * 200;
+  const valorRadio = radio <= 5 ? radio * 120 : (5 * 120 + (radio - 5) * 100);
+  const total = valorDoses + valorRadio;
+
+  const texto =
+`ORÇAMENTO ESTÉTICO
+
+Cliente: ${nome}
+Idade: ${idade}
+
+Dose 2,5 mg: ${doses} → ${formatar(valorDoses)}
+Radiofrequência: ${radio} → ${formatar(valorRadio)}
+
+VALOR TOTAL: ${formatar(total)}
+
+Forma de pagamento: ${parcelas(total)}
+
+Karina Campos – Estética Avançada
+WhatsApp: (11) 96456-8408`;
+
+  document.getElementById("resultado").innerHTML =
+    texto.replace("VALOR TOTAL", "<span class='total'>VALOR TOTAL</span>");
+
+  document.getElementById("acoes").style.display = "flex";
+
+  document.getElementById("whats").href =
+    "https://wa.me/5511964568408?text=" + encodeURIComponent(texto);
 }
 </script>
 
