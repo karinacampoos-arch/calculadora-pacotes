@@ -2,27 +2,65 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Calculadora de Pacotes | Tirzec</title> 
+<title>Sistema Completo PRO</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI', Arial;}
-body{background:linear-gradient(180deg,#f6efff,#ffffff);}
-.container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
-.box{background:#fff;padding:30px;border-radius:22px;width:100%;max-width:460px;box-shadow:0 20px 45px rgba(0,0,0,0.15);}
-.logo{text-align:center;margin-bottom:22px;}
-.logo h1{font-size:26px;color:#7a2cbf;}
-.logo span{font-size:13px;color:#666;}
-label{display:block;margin-top:16px;font-weight:600;}
-input{width:100%;padding:13px;margin-top:6px;border-radius:14px;border:1px solid #ccc;font-size:15px;}
-.check{margin-top:15px;display:flex;gap:8px;align-items:center;}
-button{margin-top:24px;width:100%;padding:16px;font-size:16px;background:linear-gradient(135deg,#b57edc,#7a2cbf);color:#fff;border:none;border-radius:18px;font-weight:bold;cursor:pointer;}
-.resultado{margin-top:24px;background:#f6efff;padding:20px;border-radius:16px;white-space:pre-line;font-size:14px;color:#4a1c80;}
-.total{font-size:18px;font-weight:bold;margin:12px 0;}
-.acoes{margin-top:18px;display:flex;gap:10px;}
-.acoes a,.acoes button{flex:1;padding:14px;border-radius:14px;font-weight:bold;cursor:pointer;text-align:center;text-decoration:none;}
-.whats{background:#25D366;color:#fff;}
-.pdf{background:#fff;border:2px solid #7a2cbf;color:#7a2cbf;}
+body{
+  margin:0;
+  font-family: Arial;
+  background:linear-gradient(180deg,#f3e8ff,#ffffff);
+}
+.container{
+  max-width:500px;
+  margin:auto;
+  padding:20px;
+}
+.box{
+  background:#fff;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.15);
+}
+h1,h2{color:#6a0dad;text-align:center;}
+label{font-weight:bold;margin-top:10px;display:block;}
+input,select{
+  width:100%;
+  padding:10px;
+  margin-top:5px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+button{
+  margin-top:10px;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#6a0dad;
+  color:#fff;
+  cursor:pointer;
+}
+.salvar{
+  width:100%;
+  background:linear-gradient(135deg,#a855f7,#6a0dad);
+}
+.total{
+  text-align:center;
+  font-size:18px;
+  margin:8px 0;
+  font-weight:bold;
+}
+table{
+  width:100%;
+  margin-top:10px;
+  border-collapse:collapse;
+}
+th,td{
+  padding:8px;
+  border-bottom:1px solid #ddd;
+  text-align:center;
+}
+th{background:#6a0dad;color:#fff;}
 </style>
 </head>
 
@@ -31,95 +69,237 @@ button{margin-top:24px;width:100%;padding:16px;font-size:16px;background:linear-
 <div class="container">
 <div class="box">
 
-<div class="logo">
-<h1>Tirzec</h1>
-<span>Orçamento Tirzec</span>
-</div>
+<h1>Controle Completo PRO</h1>
 
-<label>Nome do cliente</label>
+<h2>📦 Estoque</h2>
+<input type="number" id="estoqueInput" placeholder="Adicionar estoque">
+<button onclick="adicionarEstoque()">Adicionar</button>
+<div class="total" id="estoqueAtual">Estoque: 0</div>
+
+<div class="total" id="totalPago">Recebido: R$ 0</div>
+<div class="total" id="totalDevendo">A receber: R$ 0</div>
+
+<h2>💸 Gastos</h2>
+<input type="text" id="nomeGasto" placeholder="Nome do gasto">
+<input type="number" id="valorGasto" placeholder="Valor do gasto">
+<button onclick="adicionarGasto()">Adicionar gasto</button>
+
+<div class="total" id="totalGasto">Gastos: R$ 0</div>
+
+<table id="listaGastos"></table>
+
+<div class="total" id="lucro">Lucro: R$ 0</div>
+
+<label>Nome</label>
 <input type="text" id="nome">
 
-<label>Idade</label>
-<input type="number" id="idade">
+<label>Data</label>
+<input type="date" id="data">
 
-<div class="check">
-<input type="checkbox" id="usarDose" checked>
-<label for="usarDose">Comprar doses avulsas</label>
-</div>
+<label>Valor da dose</label>
+<input type="number" id="valorDose" value="">
 
-<label>Quantidade de doses</label>
-<input type="number" id="doses" min="0" value="0">
+<label>Quantidade</label>
+<input type="number" id="qtd" value="0">
 
-<div class="check">
-<input type="checkbox" id="usarAmpola">
-<label for="usarAmpola">Comprar ampola fechada</label>
-</div>
+<label>Status</label>
+<select id="status">
+<option>Não pago</option>
+<option>Pago</option>
+</select>
 
-<label>Quantidade de ampolas</label>
-<input type="number" id="ampolas" min="0" value="0">
+<div class="total" id="total">Total: R$ 0</div>
 
-<button onclick="calcular()">Calcular valor</button>
+<button class="salvar" onclick="salvar()">Salvar</button>
 
-<div class="resultado" id="resultado"></div>
+<h2>⚠️ Pendentes</h2>
+<table id="pendentes"></table>
 
-<div class="acoes" id="acoes" style="display:none">
-<a id="whats" class="whats" target="_blank">Enviar no WhatsApp</a>
-<button class="pdf" onclick="window.print()">Gerar PDF</button>
-</div>
+<h2>✅ Pagos</h2>
+<table id="pagos"></table>
 
 </div>
 </div>
 
 <script>
-function formatar(v){
-return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
-}
-
+// CALCULO
 function calcular(){
-const nome=document.getElementById("nome").value||"Cliente";
-const idade=document.getElementById("idade").value||"-";
-
-const usarDose=document.getElementById("usarDose").checked;
-const usarAmpola=document.getElementById("usarAmpola").checked;
-
-const doses=Number(document.getElementById("doses").value);
-const ampolas=Number(document.getElementById("ampolas").value);
-
-let valorDoses=0;
-let valorAmpolas=0;
-
-if(usarDose) valorDoses=doses*200;
-if(usarAmpola) valorAmpolas=ampolas*2000;
-
-const total=valorDoses+valorAmpolas;
-
-const texto=
-`Orçamento Tirzec
-
-Cliente: ${nome}
-Idade: ${idade}
-
-Doses de 2,5 mg: ${usarDose?doses:"Não selecionado"} → ${formatar(valorDoses)}
-Ampolas de 24 doses: ${usarAmpola?ampolas:"Não selecionado"} → ${formatar(valorAmpolas)}
-
-VALOR TOTAL: ${formatar(total)}
-
-VALORES:
-• Dose avulsa: ${formatar(200)}
-• Ampola fechada: R$ 2.000,00 à vista
-• Parcelamento disponível com juros por conta do cliente
-
-Tirzec – Orçamento
-WhatsApp: (11) 96456-8408`;
-
-document.getElementById("resultado").innerHTML=
-texto.replace("VALOR TOTAL","<span class='total'>VALOR TOTAL</span>");
-
-document.getElementById("acoes").style.display="flex";
-
-document.getElementById("whats").href=
-"https://wa.me/5511964568408?text="+encodeURIComponent(texto);
+  const valor = Number(document.getElementById("valorDose").value || 0);
+  const qtd = Number(document.getElementById("qtd").value || 0);
+  document.getElementById("total").innerText = "Total: R$ " + (valor*qtd);
 }
+valorDose.oninput = calcular;
+qtd.oninput = calcular;
+
+// ESTOQUE
+function carregarEstoque(){
+  const estoque = Number(localStorage.getItem("estoque")||0);
+  document.getElementById("estoqueAtual").innerText = "Estoque: " + estoque;
+}
+
+function adicionarEstoque(){
+  const add = Number(document.getElementById("estoqueInput").value||0);
+  let estoque = Number(localStorage.getItem("estoque")||0);
+  estoque += add;
+  localStorage.setItem("estoque", estoque);
+  carregarEstoque();
+}
+
+// GASTOS
+function adicionarGasto(){
+  const nome = document.getElementById("nomeGasto").value;
+  const valor = Number(document.getElementById("valorGasto").value || 0);
+
+  const gasto = { id: Date.now(), nome, valor };
+
+  let lista = JSON.parse(localStorage.getItem("gastosLista")||"[]");
+  lista.push(gasto);
+  localStorage.setItem("gastosLista", JSON.stringify(lista));
+
+  nomeGasto.value = "";
+  valorGasto.value = "";
+
+  mostrar();
+}
+
+function excluirGasto(id){
+  if(!confirm("Excluir gasto?")) return;
+
+  let lista = JSON.parse(localStorage.getItem("gastosLista")||"[]");
+  lista = lista.filter(g=>g.id!=id);
+  localStorage.setItem("gastosLista", JSON.stringify(lista));
+
+  mostrar();
+}
+
+// SALVAR CLIENTE
+function salvar(){
+  const nome = document.getElementById("nome").value;
+  const data = document.getElementById("data").value;
+  const qtd = Number(document.getElementById("qtd").value);
+  const valor = Number(document.getElementById("valorDose").value || 0);
+  const status = document.getElementById("status").value;
+
+  let estoque = Number(localStorage.getItem("estoque")||0);
+
+  if(qtd > estoque){
+    alert("Estoque insuficiente!");
+    return;
+  }
+
+  estoque -= qtd;
+  localStorage.setItem("estoque", estoque);
+
+  const cliente = {
+    id: Date.now(),
+    nome,
+    data,
+    qtd,
+    total: valor*qtd,
+    status
+  };
+
+  let lista = JSON.parse(localStorage.getItem("clientes")||"[]");
+  lista.push(cliente);
+  localStorage.setItem("clientes", JSON.stringify(lista));
+
+  document.getElementById("nome").value="";
+  document.getElementById("qtd").value=0;
+
+  mostrar();
+  carregarEstoque();
+}
+
+// MOSTRAR
+function mostrar(){
+  const pagos = document.getElementById("pagos");
+  const pendentes = document.getElementById("pendentes");
+  const tabelaGastos = document.getElementById("listaGastos");
+
+  pagos.innerHTML = "<tr><th>Nome</th><th>Doses</th><th>Total</th><th>Ação</th></tr>";
+  pendentes.innerHTML = "<tr><th>Nome</th><th>Doses</th><th>Total</th><th>Ação</th></tr>";
+  tabelaGastos.innerHTML = "<tr><th>Nome</th><th>Valor</th><th>Ação</th></tr>";
+
+  const lista = JSON.parse(localStorage.getItem("clientes")||"[]");
+  const listaGastos = JSON.parse(localStorage.getItem("gastosLista")||"[]");
+
+  let totalPago=0, totalDevendo=0, totalGasto=0;
+
+  lista.forEach(c=>{
+    const linha = `
+    <tr>
+      <td>${c.nome}</td>
+      <td>${c.qtd}</td>
+      <td>R$ ${c.total}</td>
+      <td>
+        ${c.status!="Pago"?`<button onclick="marcarPago(${c.id})">💰</button>`:""}
+        <button onclick="excluir(${c.id})">🗑️</button>
+      </td>
+    </tr>`;
+
+    if(c.status=="Pago"){
+      totalPago += Number(c.total);
+      pagos.innerHTML += linha;
+    } else {
+      totalDevendo += Number(c.total);
+      pendentes.innerHTML += linha;
+    }
+  });
+
+  listaGastos.forEach(g=>{
+    totalGasto += Number(g.valor);
+    tabelaGastos.innerHTML += `
+    <tr>
+      <td>${g.nome}</td>
+      <td>R$ ${g.valor}</td>
+      <td><button onclick="excluirGasto(${g.id})">🗑️</button></td>
+    </tr>`;
+  });
+
+  const lucro = totalPago - totalGasto;
+
+  totalPagoEl.innerText = "Recebido: R$ "+totalPago;
+  totalDevendoEl.innerText = "A receber: R$ "+totalDevendo;
+  totalGastoEl.innerText = "Gastos: R$ "+totalGasto;
+  lucroEl.innerText = "Lucro: R$ "+lucro;
+}
+
+// AÇÕES
+function marcarPago(id){
+  let lista = JSON.parse(localStorage.getItem("clientes")||"[]");
+  lista = lista.map(c=>{
+    if(c.id==id) c.status="Pago";
+    return c;
+  });
+  localStorage.setItem("clientes", JSON.stringify(lista));
+  mostrar();
+}
+
+function excluir(id){
+  if(!confirm("Excluir cliente?")) return;
+
+  let lista = JSON.parse(localStorage.getItem("clientes")||"[]");
+  const cliente = lista.find(c=>c.id==id);
+
+  let estoque = Number(localStorage.getItem("estoque")||0);
+  estoque += Number(cliente.qtd);
+  localStorage.setItem("estoque", estoque);
+
+  lista = lista.filter(c=>c.id!=id);
+  localStorage.setItem("clientes", JSON.stringify(lista));
+
+  mostrar();
+  carregarEstoque();
+}
+
+// INIT
+const totalPagoEl = document.getElementById("totalPago");
+const totalDevendoEl = document.getElementById("totalDevendo");
+const totalGastoEl = document.getElementById("totalGasto");
+const lucroEl = document.getElementById("lucro");
+
+mostrar();
+carregarEstoque();
 </script>
 
 </body>
